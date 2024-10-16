@@ -5,7 +5,7 @@ import Pagination from "@/components/Pagination";
 import { IoMdAdd } from "react-icons/io";
 
 export async function getServerSideProps() {
-  const apiUrl = process.env.API_URL || "http://localhost:3000";
+  const apiUrl = process.env.API_URL;
   const res = await fetch(`${apiUrl}/api/items`);
   const items = await res.json();
 
@@ -62,52 +62,40 @@ export default function Home({ items }) {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-800 lg:px-20 lg:py-10">
+      <div className="min-h-screen bg-gray-800 lg:px-20 lg:py-10 px-4 py-6">
         <div className="flex flex-col items-center justify-center">
           <h1 className="text-2xl text-white font-mono font-bold">
             Student Management
           </h1>
 
-          <div className="w-full flex justify-end mr-10 mb-4">
+          <div className="w-full flex justify-end mb-4 mt-5">
             <button
-              className="text-white bg-green-600 hover:bg-green-800 flex items-center gap-2 font-medium rounded-lg text-sm px-5 py-2.5"
+              className="text-white bg-green-600 hover:bg-green-800 flex items-center gap-2 font-medium rounded-lg text-sm px-4 py-2"
               onClick={handleCreate}
             >
               <IoMdAdd /> Create New Student
             </button>
           </div>
 
-          <div>
-            <table className="w-full text-sm text-center rtl:text-right text-gray-500 dark:text-gray-400">
+          <div className="overflow-x-auto w-full">
+            <table className="min-w-full text-sm text-center rtl:text-right text-gray-500 dark:text-gray-400">
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                  <th scope="col" className="px-6 py-3">
-                    ID
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    First Name
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Last Name
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    DOB
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Gender
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Address
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Email
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Phone Number
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Actions
-                  </th>
+                  {[
+                    "ID",
+                    "First Name",
+                    "Last Name",
+                    "DOB",
+                    "Gender",
+                    "Address",
+                    "Email",
+                    "Phone Number",
+                    "Actions",
+                  ].map((heading) => (
+                    <th key={heading} className="px-6 py-3">
+                      {heading}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
@@ -130,17 +118,17 @@ export default function Home({ items }) {
                       <td className="px-6 py-4">{item.address}</td>
                       <td className="px-6 py-4">{item.email}</td>
                       <td className="px-6 py-4">{item.phoneNumber}</td>
-                      <td className="px-6 py-4 flex items-center gap-5">
+                      <td className="px-6 py-4 flex items-center gap-3 justify-center">
                         <button
                           type="button"
-                          className="text-white bg-blue-700 hover:bg-blue-800 flex items-center gap-2 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+                          className="text-white bg-blue-700 hover:bg-blue-800 flex items-center gap-2 font-medium rounded-lg text-sm px-3 py-1"
                           onClick={() => handleEdit(item)}
                         >
                           <MdEdit /> Edit
                         </button>
                         <button
                           type="button"
-                          className="text-white bg-rose-700 hover:bg-rose-800 flex items-center gap-2 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+                          className="text-white bg-rose-700 hover:bg-rose-800 flex items-center gap-2 font-medium rounded-lg text-sm px-3 py-1"
                           onClick={() => deleteItem(item.id)}
                         >
                           <MdDelete /> Delete
