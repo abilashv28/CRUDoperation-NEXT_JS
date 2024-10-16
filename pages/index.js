@@ -5,7 +5,8 @@ import Pagination from "@/components/Pagination";
 import { IoMdAdd } from "react-icons/io";
 
 export async function getServerSideProps() {
-  const res = await fetch("http://localhost:3000/api/items");
+  const apiUrl = process.env.API_URL || "http://localhost:3000";
+  const res = await fetch(`${apiUrl}/api/items`);
   const items = await res.json();
 
   return {
